@@ -7,7 +7,7 @@ from typing import List
 import uuid
 import aiohttp
 from io import BytesIO
-from function import hair_mask, auto_crop, head_mask, generate_hair_mask, generate_preson_box_mask, generate_inverted_mask
+from function import hair_mask, auto_crop, head_mask, generate_hair_mask, generate_preson_box_mask, generate_inverted_mask, generate_bob_hair
 from pydantic import BaseModel
 from io import BytesIO
 from PIL import Image
@@ -195,6 +195,27 @@ async def inverted_mask_endpoint(base64_image: Base64Image):
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Invalid base64 string: {e}")
 
+
+@app.post("/generate-bob-hair/")
+async def bob_hair_endpoint(base64_image: Base64Image):
+    try:
+        image_io = decode_base64_image(base64_image.base64_string)
+        image_path = f"{UPLOAD_DIR}/{str(uuid.uuid4())}.png"
+        with open(image_path, "wb") as f:
+            f.write(image_io.getvalue())
+        
+        bob_hair_path = generate_bob_hair(image_path)
+
+        with open(bob_hair_path, "rb") as mask_file:
+            bob_hair = base64.b64encode(mask_file.read()).decode('utf-8')
+
+        os.remove(image_path)
+        os.remove(bob_hair_path)
+
+        return bob_hair
+    
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Invalid base64 string: {e}")
 
 
 if __name__ == "__main__":

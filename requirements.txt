@@ -12,3 +12,10 @@ fastapi
 uvicorn
 segment-anything
 aiohttp
+matplotlib 
+onnxruntime 
+onnx 
+ipympl
+accelerate 
+diffusers 
+ftfy

@@ -409,7 +409,7 @@ def generate_bob_hair(source_image_path: str) -> str:
     images.save(bob_hair)
     # Load an image using PIL
 
-    image2 = Image.open("1.png")
+    image2 = Image.open(source_image_path)
 
     # Define a transformation to convert the image to a tensor
     transform = transforms.ToTensor()

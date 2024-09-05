@@ -429,6 +429,7 @@ def add_padding_to_mask(mask, padding_size=5):
 
 #     return bob_hair
 
+
 def generate_bob_hair(source_image_path: str) -> str:
     load_grounding_dino_model()
 
@@ -557,5 +558,6 @@ def generate_bob_hair(source_image_path: str) -> str:
 
     return bob_hair
 
+    
 if __name__ == "__main__":
     generate_bob_hair("model_1.jpeg")
